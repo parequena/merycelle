@@ -4,14 +4,14 @@
 #include "SDL.h"
 
 class Sprite {
-private:
+protected:
 	SDL_Surface *image;
 	SDL_Rect rect;
 
 	int origin_X, origin_Y;
 
 public:
-	Sprite(const Uint32 color, const int x, const int y, const int w = 48, const int h = 64)
+	Sprite(const Uint32 color, const int x, const int y, const int w, const int h)
 	{
 		image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0); // flags, width, height, depth, rmask, gmask, bmask, amask
 		SDL_FillRect(image, NULL, color);
@@ -22,8 +22,8 @@ public:
 		origin_Y = rect.h / 2; // Origin Y (left-top corner)
 
  		// Relative X and Y.
-		rect.x = x - origin_X;
-		rect.y = y - origin_Y;
+		rect.x = x;
+		rect.y = y;
 	}
 
 	inline void update()

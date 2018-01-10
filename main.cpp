@@ -1,12 +1,12 @@
 // Merycelle Project
 #include <iostream>
-#include "sprite.h"
-#include <vector>
+#include "spriteGroup.h"
+#include "block.h"
 
 #define DF_projectName "Merycelle"
 #define DF_fps 60
-#define DF_windWidth 400
-#define DF_windHeight 200
+#define DF_windWidth 800
+#define DF_windHeight 400
 
 void cap_Framerate(Uint32 starting_tick)
 {
@@ -33,13 +33,22 @@ int main(int argc, char *argv[])
 	else // Window has been created.
 	{
 		SDL_Surface *screen = SDL_GetWindowSurface(wind); // Screen variable.
-		Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255); // Creating white color.
-		Uint32 red = SDL_MapRGB(screen->format, 255, 0, 0); // Creating white color.
+		Uint32 white = SDL_MapRGB(screen->format, 0, 0, 0); // Creating white color.
+		Uint32 red = SDL_MapRGB(screen->format, 255, 0, 0); // Creating red color.
+		Uint32 blue = SDL_MapRGB(screen->format, 0, 0, 255); // Creating blue color.
 
 		SDL_FillRect(screen, NULL, white); // Filling the screen.
+		
+		Block block(red, 0, 0);
+		block.setImage("R.bmp"); // Violación de segmento (`core' generado)
 
-		Sprite redBox(red, DF_windWidth/2, DF_windHeight/2);
-		redBox.draw(screen);
+		Block block2(red, 100, 100);
+		block2.setImage("smurfs.png");
+
+		SpriteGroup activeSprites;
+		activeSprites.add(&block);
+		activeSprites.add(&block2);
+		activeSprites.draw(screen);
 
 		SDL_UpdateWindowSurface(wind); // Updates the info.
 

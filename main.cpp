@@ -7,6 +7,7 @@
 #define DF_fps 60
 #define DF_windWidth 800
 #define DF_windHeight 400
+#define DF_KeyPressed event.key.keysym.sym
 
 void cap_Framerate(Uint32 starting_tick)
 {
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
 	else // Window has been created.
 	{
 		SDL_Surface *screen = SDL_GetWindowSurface(wind); // Screen variable.
-		Uint32 white = SDL_MapRGB(screen->format, 0, 0, 0); // Creating white color.
+		Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255); // Creating white color.
 		Uint32 red = SDL_MapRGB(screen->format, 255, 0, 0); // Creating red color.
 		Uint32 blue = SDL_MapRGB(screen->format, 0, 0, 255); // Creating blue color.
 
@@ -42,12 +43,8 @@ int main(int argc, char *argv[])
 		Block block(red, 0, 0);
 		block.setImage("R.bmp"); // Violación de segmento (`core' generado)
 
-		Block block2(red, 100, 100);
-		block2.setImage("smurfs.png");
-
 		SpriteGroup activeSprites;
 		activeSprites.add(&block);
-		activeSprites.add(&block2);
 		activeSprites.draw(screen);
 
 		SDL_UpdateWindowSurface(wind); // Updates the info.
@@ -62,9 +59,29 @@ int main(int argc, char *argv[])
 			while(SDL_PollEvent(&event))
 			{
 				if(event.type == SDL_QUIT) // If we close the window.
-				{
 					runGame = false; // Stop game.
-					break;
+				else if(event.type == SDL_KEYDOWN)
+				{
+					if(DF_KeyPressed == SDLK_DOWN)
+					{
+						block.moveY(1);
+						activeSprites.draw(screen);
+					}
+					if(DF_KeyPressed == SDLK_UP)
+					{
+						block.moveY(-1);
+						activeSprites.draw(screen);
+					}
+					if(DF_KeyPressed == SDLK_LEFT)
+					{
+						block.moveX(-1);
+						activeSprites.draw(screen);
+					}
+					if(DF_KeyPressed == SDLK_RIGHT)
+					{
+						block.moveX(1);
+						activeSprites.draw(screen);
+					}
 				}
 			}
 

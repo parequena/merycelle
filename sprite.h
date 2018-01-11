@@ -11,6 +11,12 @@ protected:
 	int origin_X, origin_Y;
 
 public:
+
+	/*Sprite(const std::string filename = NULL, const int x = 0, const int y = 0, const int w, const int h)
+	{
+
+	}*/ 
+
 	Sprite(const Uint32 color, const int x, const int y, const int w, const int h)
 	{
 		image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0); // flags, width, height, depth, rmask, gmask, bmask, amask

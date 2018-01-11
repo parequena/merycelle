@@ -1,2 +1,2 @@
-# merycelle
+# Merycelle
 Merycelle project

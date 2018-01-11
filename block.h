@@ -49,6 +49,22 @@ public:
 			}
 		}
 	}
+
+	void moveX(const int &units)
+	{
+		if(rect.x + units >= 0 && rect.x + rect.w + units <= 800)
+		{
+			setPosition(rect.x + units ,rect.y);
+		}
+	}
+
+	void moveY(const int &units)
+	{
+		if(rect.y + units >= 0 && rect.y + rect.h + units <= 400)
+		{
+			setPosition(rect.x,rect.y + units);
+		}
+	}
 };
 
 #endif

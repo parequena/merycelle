@@ -1,13 +1,14 @@
 // Merycelle Project
 #include <iostream>
-#include "spriteGroup.h"
-#include "block.h"
+#include "sources/Game.h"
 
 #define DF_projectName "Merycelle"
 #define DF_fps 60
-#define DF_windWidth 800
-#define DF_windHeight 400
+#define DF_windWidth  
+#define DF_windHeight 360
 #define DF_KeyPressed event.key.keysym.sym
+
+const Uint32 windowFlags = SDL_WINDOW_SHOWN;
 
 void cap_Framerate(Uint32 starting_tick)
 {
@@ -18,13 +19,61 @@ void cap_Framerate(Uint32 starting_tick)
 
 int main(int argc, char *argv[])
 {
-	Uint32 starting_tick;
+	Uint32 starting_tick; // For clock (tick);
+	SDL_Init(SDL_INIT_EVERYTHING); // Init SDL.
+
+	// Creating the window.
+	SDL_Window *window = SDL_CreateWindow(DF_projectName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		DF_windWidth, DF_windHeight, windowFlags);
+
+	Sprite mainChar("sprites/R.bmp");
+	Sprite level_0("sprites/level_0.bmp");
+
+	SDL_Surface *screen = SDL_GetWindowSurface(window); // Screen variable.
+	Uint32 white = SDL_MapRGB(screen->format, 255, 255, 255); // Creating white color.
+	Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0); // Creating black color.
+
+	if(window == NULL)
+	{
+		std::cerr << "Error: Window not initialized!\n";
+		std::cerr << SDL_GetError() << "\n";
+	}
+	else // Window has been created.
+	{
+		SDL_Event event;
+		bool runGame = true;
+
+		while(runGame)
+		{
+			starting_tick = SDL_GetTicks(); // Miliseconds since SDL_Init.
+
+			while(SDL_PollEvent(&event))
+			{
+				if(event.type == SDL_QUIT) // If we close the window.
+					runGame = false; // Stop game.
+			}
+
+			cap_Framerate(starting_tick); // FPS
+		}
+
+		SDL_DestroyWindow(window); // Destroy the window.
+		SDL_Quit(); // Save quit.
+	}
+
+	return 0;
+}
+
+/*int main(int argc, char *argv[])
+{
+	Sprite menuSprite();
+	map_init();
+	Uint32 starting_tick; // Initialize the tick (clock).
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *wind = NULL;
 
 	wind = SDL_CreateWindow(DF_projectName, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		DF_windWidth, DF_windHeight, SDL_WINDOW_RESIZABLE);
+		DF_windWidth, DF_windHeight) // flags : , SDL_WINDOW_RESIZABLE);
 
 	if(wind == NULL)
 	{
@@ -93,4 +142,4 @@ int main(int argc, char *argv[])
 	}
 
 	return 0;
-}
+}*/

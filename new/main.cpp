@@ -6,9 +6,11 @@
 #define DF_FPS 60
 
 #include "sources/Game.cpp"
+#include "sources/Render.cpp"
 
 const int frameDelay = 1000/DF_FPS;
 Game *game = nullptr;
+SDL_Renderer *Render::renderer = nullptr;
 
 int main(int argc, char *argv[])
 {

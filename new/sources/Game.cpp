@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "GameObject.cpp"
+#include "Map.cpp"
 
 #define DF_MainCharSprite "sprites/main.png"
 #define DF_1 "sprites/R.bmp"
@@ -16,10 +17,12 @@ private:
 	int cnt;
 	bool isRunning = false;
 	SDL_Window *window;
-	SDL_Renderer *renderer;
 	GameObject *mainPlayer, *otherObject;
+	Map * map;
+	Render rend;
 
 public:
+
 	// Ctor
 	Game(const std::string &title, const int &x, const int &y, const int &w, const int &h)
 	{
@@ -30,10 +33,10 @@ public:
 			if(!window)
 				std::cerr << "Error: Window creation failed.\n";
 
-			renderer = SDL_CreateRenderer(window, -1, 0);
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0); // Render to white.
+			rend.renderer = SDL_CreateRenderer(window, -1, 0);
+			SDL_SetRenderDrawColor(rend.renderer, 255, 255, 255, 0); // Render to white.
 
-			if(!renderer)
+			if(!rend.renderer)
 				std::cerr << "Error: Renderer creation failed.\n";
 
 			isRunning = true;
@@ -41,8 +44,15 @@ public:
 		else
 			std::cerr << "Error: Init failed.\n";
 
-		mainPlayer = new GameObject(DF_MainCharSprite, renderer, 0, 0);
-		otherObject = new GameObject(DF_1, renderer, 100, 100);
+		mainPlayer = new GameObject(DF_MainCharSprite, 0, 0);
+		otherObject = new GameObject(DF_1, 100, 100);
+
+		std::vector<std::string> names;
+		names.push_back("sprites/black.png");
+		names.push_back("sprites/grey.png");
+		names.push_back("sprites/white.png");
+
+		map = new Map(names);
 	}
 
 	// Dtor
@@ -72,18 +82,18 @@ public:
 
 	inline void render()
 	{
-		SDL_RenderClear(renderer);
-		// Textures to render.
+		SDL_RenderClear(rend.renderer);
+		// Textures to rend.
 		// Background -> Top.
 		mainPlayer->render();
 		otherObject->render();
-		SDL_RenderPresent(renderer);
+		SDL_RenderPresent(rend.renderer);
 	}
 
 	inline void clear()
 	{
 		SDL_DestroyWindow(window);
-		SDL_DestroyRenderer(renderer);
+		SDL_DestroyRenderer(rend.renderer);
 		SDL_Quit();
 	}
 

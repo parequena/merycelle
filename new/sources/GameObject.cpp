@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 
 #include "TextureManager.cpp"
+#include "Game.cpp"
 
 class GameObject
 {
@@ -9,13 +10,11 @@ private:
 	int x, y; // Where to place the Object.
 	SDL_Texture *objTexture; // Texture of the Object.
 	SDL_Rect srcRect, dstRect; // srcRect -> Image Load. dstRect -> Rect to draw on surface.
-	SDL_Renderer *renderer;    // Render
 
 public:
-	GameObject(const std::string textureSheet, SDL_Renderer *rend, const int &xPos, const int &yPos)
+	GameObject(const std::string textureSheet, const int &xPos, const int &yPos)
 	{
-		renderer = rend;
-		objTexture = TextureManager::LoadTexture(textureSheet, rend);
+		objTexture = TextureManager::LoadTexture(textureSheet);
 
 		x = xPos;
 		y = yPos;
@@ -46,7 +45,7 @@ public:
 
 	inline void render()
 	{
-		SDL_RenderCopy(renderer, objTexture, &srcRect, &dstRect);
+		SDL_RenderCopy(Render::renderer, objTexture, &srcRect, &dstRect);
 	}
 };
 

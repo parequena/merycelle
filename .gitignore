@@ -1,5 +1,6 @@
 # Prerequisites
 *.d
+*exe* # Compiled file
 
 # Compiled Object files
 *.slo

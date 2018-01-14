@@ -1,4 +1,8 @@
 # Merycelle
 Merycelle project
 
-How To Make A Game #6 : Implement Tilemap's : C++ And SDL2 Tutorial
+# Prerequisites
+You must have SDL2 and SDL2_image (dev) installed on pc.
+
+To compile the project:
+g++ -o exe main.cpp `pkg-config --cflags --libs sdl2` -lSDL2_image

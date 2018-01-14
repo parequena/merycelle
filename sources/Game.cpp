@@ -18,7 +18,7 @@ private:
 	bool isRunning = false;
 	SDL_Window *window;
 	GameObject *mainPlayer, *otherObject;
-	Map * map;
+	Map *map;
 	Render rend;
 
 public:
@@ -85,6 +85,7 @@ public:
 		SDL_RenderClear(rend.renderer);
 		// Textures to rend.
 		// Background -> Top.
+		map->drawMap();
 		mainPlayer->render();
 		otherObject->render();
 		SDL_RenderPresent(rend.renderer);

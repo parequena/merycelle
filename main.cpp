@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 
 	game = new Game(DF_ProjectName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DF_windowWidth, DF_windowHeight);
 
+	std::cout << "PUTO\n";
 	while(game->running())
 	{
 		frameStart = SDL_GetTicks(); // Miliseconds it's been from first SDL Init.

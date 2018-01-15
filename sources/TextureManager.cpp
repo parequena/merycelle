@@ -8,7 +8,7 @@
 class TextureManager
 {
 public:
-	inline static SDL_Texture *LoadTexture(const std::string fileName)
+	static SDL_Texture *LoadTexture(const std::string fileName)
 	{
 		SDL_Surface *tmpSurface = IMG_Load(fileName.c_str());
 		SDL_Texture *tex = SDL_CreateTextureFromSurface(Render::renderer, tmpSurface);

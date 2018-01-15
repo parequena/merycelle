@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <iostream>
+#include <stdlib.h>
 #include "GameObject.cpp"
 #include "Map.cpp"
 
@@ -16,9 +17,9 @@ class Game
 private:
 	int cnt;
 	bool isRunning = false;
-	SDL_Window *window;
-	GameObject *mainPlayer, *otherObject;
-	Map *map;
+	SDL_Window *window = nullptr;
+	GameObject *mainPlayer = nullptr, *otherObject = nullptr;
+	Map *map = nullptr;
 	Render rend;
 
 public:
@@ -45,7 +46,6 @@ public:
 			std::cerr << "Error: Init failed.\n";
 
 		mainPlayer = new GameObject(DF_MainCharSprite, 0, 0);
-		otherObject = new GameObject(DF_1, 100, 100);
 
 		std::vector<std::string> names;
 		names.push_back("sprites/black.png");
@@ -77,7 +77,6 @@ public:
 	inline void update()
 	{
 		mainPlayer->update();
-		otherObject->update();
 	}
 
 	inline void render()
@@ -85,17 +84,19 @@ public:
 		SDL_RenderClear(rend.renderer);
 		// Textures to rend.
 		// Background -> Top.
-		map->drawMap();
+		// map->drawMap();
 		mainPlayer->render();
-		otherObject->render();
 		SDL_RenderPresent(rend.renderer);
 	}
 
 	inline void clear()
 	{
-		SDL_DestroyWindow(window);
-		SDL_DestroyRenderer(rend.renderer);
-		SDL_Quit();
+		if(window != nullptr)
+		{
+			SDL_DestroyWindow(window);
+			SDL_DestroyRenderer(rend.renderer);
+			SDL_Quit();
+		}
 	}
 
 	inline bool running()
